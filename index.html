@@ -58,6 +58,16 @@
   #portada .nota { margin-top: 18px; font-size: .9rem; opacity: .7; max-width: 30ch; line-height: 1.45; }
   @media (prefers-reduced-motion: reduce) { .caja { animation: none; } }
 
+  /* Panel de QR para quien abre la tarjeta desde una computadora */
+  .qr-panel { display: none; margin-top: 30px; flex-direction: column; align-items: center; gap: 10px; }
+  .qr-panel.visible { display: flex; }
+  .qr-panel-linea { display: flex; align-items: center; gap: 10px; width: 100%; max-width: 220px; }
+  .qr-panel-linea span { flex: 1; height: 1px; background: rgba(255,248,238,.25); }
+  .qr-panel-linea em { font-style: normal; font-size: .78rem; opacity: .65; white-space: nowrap; }
+  .qr-panel-img { background: var(--papel); padding: 10px; border-radius: 16px; width: 116px; height: 116px; box-shadow: 0 14px 34px rgba(0,0,0,.35); }
+  .qr-panel-img svg { width: 100%; height: 100%; display: block; }
+  .qr-panel-cap { font-size: .82rem; opacity: .75; max-width: 22ch; text-align: center; line-height: 1.4; }
+
   /* Botones de la tarjeta */
   .boton {
     display: inline-flex; align-items: center; justify-content: center; gap: 8px;
@@ -126,7 +136,7 @@
 const TARJETA = {
   para: "Adriana",                        // Nombre de tu compañera
   de: "Jenny",                          // Tu nombre
-  mensaje: "Gracias por ser de esas compañeras que hacen que el trabajo se sienta más liviano. Por tu paciencia cuando las cosas se complican, por la risa que aparece justo cuando más se necesita y por esa manera tan tuya de ayudar sin que nadie tenga que pedírtelo. Compartir el día a día contigo hace que hasta las jornadas más pesadas valgan la pena. Ojalá este día te recuerde lo mucho que se te aprecia por aquí. ¡Feliz día de amor y amistad!",
+  mensaje: `Adriana, quiero aprovechar este espacio para reconocerte como una pieza clave de nuestro equipo. Como tu líder, veo de cerca la dedicación con la que asumes cada tarea: la manera en que revisas cada detalle y te concentras en hacer bien las cosas que desarrollas como ingeniera de sistemas habla muy bien de tu profesionalismo. Contar contigo en el equipo es, sin duda, un honor y un privilegio. Como decía Aristóteles: "somos lo que hacemos repetidamente; la excelencia, entonces, no es un acto, sino un hábito", y tú la demuestras cada día con tu compromiso. Gracias por inspirar con tu ejemplo. ¡Feliz mes de la amistad y el compañerismo!`,
   foto: ""                              // Opcional: nombre de una imagen subida junto a este archivo, ej. "foto.jpg"
 };
 </script>
@@ -140,6 +150,12 @@ const TARJETA = {
   <p class="para" id="para-inicio"></p>
   <button id="boton-abrir">Abrir mi tarjeta</button>
   <p class="nota">Te pediremos permiso para usar la cámara, así el osito aparece donde estás.</p>
+
+  <div id="qr-panel" class="qr-panel">
+    <div class="qr-panel-linea" aria-hidden="true"><span></span><em>¿Estás en tu computador?</em><span></span></div>
+    <div class="qr-panel-img"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 43 43" shape-rendering="crispEdges"><path fill="#FFF8EE" d="M0 0h43v43H0z"/><path stroke="#22302F" d="M1 1.5h7m1 0h1m2 0h1m1 0h1m2 0h3m1 0h3m2 0h3m2 0h3m1 0h7M1 2.5h1m5 0h1m4 0h2m5 0h1m1 0h1m1 0h1m1 0h1m1 0h4m1 0h2m1 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m5 0h2m1 0h1m1 0h2m6 0h2m1 0h1m3 0h1m1 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m1 0h4m2 0h1m2 0h2m1 0h2m1 0h4m2 0h1m1 0h2m1 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m3 0h4m1 0h3m1 0h1m1 0h1m3 0h3m1 0h1m1 0h1m2 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m3 0h2m1 0h2m1 0h4m1 0h2m2 0h1m1 0h1m3 0h2m1 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M11 8.5h1m1 0h2m2 0h2m3 0h3m4 0h2m1 0h1M3 9.5h1m1 0h3m1 0h1m4 0h2m6 0h1m3 0h1m1 0h3m1 0h3m3 0h1m2 0h1M4 10.5h1m1 0h1m1 0h2m1 0h1m1 0h4m1 0h3m1 0h2m1 0h1m1 0h1m1 0h2m2 0h3m2 0h4M2 11.5h6m6 0h2m3 0h1m1 0h2m2 0h2m8 0h1m3 0h3M1 12.5h1m1 0h1m1 0h2m1 0h1m1 0h2m1 0h1m1 0h2m1 0h1m2 0h1m2 0h1m1 0h3m1 0h1m2 0h1m2 0h1m3 0h2M1 13.5h8m4 0h1m1 0h1m1 0h2m2 0h1m2 0h1m3 0h1m1 0h1m1 0h2m1 0h2m1 0h1m1 0h1M1 14.5h1m1 0h1m5 0h1m1 0h1m1 0h3m1 0h1m5 0h3m1 0h2m3 0h2m4 0h1m1 0h2M1 15.5h1m2 0h2m1 0h4m2 0h1m1 0h4m2 0h2m9 0h2m1 0h5m1 0h1M1 16.5h1m2 0h2m2 0h1m1 0h4m2 0h2m3 0h1m1 0h1m4 0h1m1 0h2m1 0h1m1 0h1m5 0h1M2 17.5h1m1 0h1m2 0h2m1 0h1m2 0h2m2 0h3m1 0h3m1 0h1m3 0h2m1 0h2m1 0h2m1 0h1m1 0h1M4 18.5h2m2 0h1m2 0h2m2 0h1m2 0h4m2 0h2m1 0h1m1 0h1m3 0h1m1 0h1m3 0h3M3 19.5h1m1 0h3m1 0h1m3 0h4m2 0h4m1 0h1m4 0h2m2 0h1m1 0h1m1 0h2m1 0h2M1 20.5h1m1 0h2m3 0h1m1 0h1m1 0h5m4 0h4m2 0h1m4 0h2m1 0h2m4 0h1M3 21.5h1m1 0h4m2 0h1m1 0h1m1 0h4m2 0h3m1 0h1m3 0h1m3 0h1m1 0h1m1 0h2m1 0h2M2 22.5h1m2 0h1m3 0h3m1 0h3m2 0h1m1 0h2m3 0h2m3 0h1m2 0h3m1 0h2m1 0h2M1 23.5h1m1 0h1m1 0h4m1 0h2m1 0h2m3 0h2m3 0h2m4 0h1m8 0h4M2 24.5h1m3 0h1m3 0h1m1 0h2m1 0h3m1 0h3m1 0h5m2 0h2m1 0h3m1 0h2m2 0h1M2 25.5h3m1 0h3m1 0h1m1 0h4m1 0h2m2 0h3m6 0h1m2 0h4m3 0h1M1 26.5h4m3 0h2m3 0h5m1 0h4m1 0h1m4 0h1m4 0h2m4 0h2M1 27.5h1m1 0h3m1 0h1m2 0h3m2 0h1m1 0h1m3 0h2m1 0h4m1 0h1m1 0h1m2 0h1m1 0h2m1 0h3M4 28.5h3m1 0h5m1 0h1m2 0h3m2 0h2m2 0h2m1 0h2m2 0h4M1 29.5h3m2 0h2m2 0h4m3 0h1m2 0h5m3 0h3m1 0h1m1 0h1m3 0h1m2 0h1M2 30.5h4m4 0h4m1 0h1m2 0h1m5 0h1m3 0h5m1 0h1m3 0h1m1 0h2M1 31.5h1m1 0h1m2 0h3m2 0h3m3 0h1m1 0h1m3 0h1m1 0h2m1 0h2m1 0h1m4 0h1m3 0h2M2 32.5h1m2 0h2m1 0h1m1 0h1m3 0h5m1 0h1m4 0h1m3 0h4m1 0h3M1 33.5h1m1 0h3m1 0h1m1 0h4m1 0h2m1 0h1m2 0h3m1 0h2m2 0h1m1 0h1m2 0h5M9 34.5h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m1 0h1m2 0h1m1 0h1m1 0h2m2 0h1m3 0h1m2 0h2M1 35.5h7m2 0h1m2 0h4m1 0h2m4 0h1m1 0h1m2 0h1m1 0h3m1 0h1m1 0h1m1 0h3M1 36.5h1m5 0h1m1 0h1m1 0h1m2 0h1m1 0h2m4 0h3m1 0h6m1 0h1m3 0h1M1 37.5h1m1 0h3m1 0h1m1 0h4m1 0h1m2 0h2m1 0h4m2 0h1m2 0h1m1 0h1m1 0h5m2 0h1M1 38.5h1m1 0h3m1 0h1m3 0h1m2 0h1m1 0h9m1 0h2m1 0h1m1 0h1m2 0h1m2 0h1m1 0h3M1 39.5h1m1 0h3m1 0h1m1 0h2m2 0h1m1 0h2m1 0h1m1 0h1m2 0h4m3 0h1m1 0h2m2 0h3m2 0h1M1 40.5h1m5 0h1m3 0h2m2 0h3m1 0h3m2 0h3m1 0h3m1 0h2m1 0h2m1 0h1m1 0h1M1 41.5h7m3 0h1m7 0h2m3 0h4m1 0h2m1 0h2m2 0h2m1 0h3"/></svg></div>
+    <p class="qr-panel-cap">Escanéala con tu celular para vivir al osito en realidad aumentada</p>
+  </div>
 </section>
 
 <div id="pista">Mueve tu celular para mirar alrededor 👀</div>
@@ -251,6 +267,44 @@ const TARJETA = {
     scene.add(m); flotantes.push(m);
   }
 
+  // ---------- Confeti ----------
+  const confetiGeo = new THREE.PlaneGeometry(0.16, 0.1);
+  const matConfeti = c => new THREE.MeshStandardMaterial({ color: c, roughness: 0.5, metalness: 0.05, side: THREE.DoubleSide, emissive: c, emissiveIntensity: 0.12 });
+  for (let i = 0; i < 22; i++) {
+    const m = new THREE.Mesh(confetiGeo, matConfeti(COLORES[i % COLORES.length]));
+    const ang = Math.random() * Math.PI * 2, r = 4 + Math.random() * 7;
+    m.position.set(Math.cos(ang) * r, -5 + Math.random() * 10, Math.sin(ang) * r);
+    m.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI);
+    m.scale.setScalar(0.8 + Math.random() * 1.1);
+    m.userData = { vel: 0.002 + Math.random() * 0.004, giro: (Math.random() - .5) * 0.05, fase: Math.random() * 6 };
+    m.visible = false;
+    scene.add(m); flotantes.push(m);
+  }
+
+  // ---------- Regalos flotantes ----------
+  const coloresRegalo = [0xFF7A59, 0x7FD1C7, 0xB8A1FF, 0x2C5B5D, 0xC68B59];
+  const matCinta = new THREE.MeshStandardMaterial({ color: 0xFFC857, roughness: 0.4, metalness: 0.25, emissive: 0xFFC857, emissiveIntensity: 0.15 });
+  const lazoGeo = new THREE.TorusGeometry(0.07, 0.025, 8, 16);
+  function crearRegalo(color) {
+    const g = new THREE.Group();
+    g.add(new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.3, 0.34), new THREE.MeshStandardMaterial({ color, roughness: 0.55, metalness: 0.1 })));
+    g.add(new THREE.Mesh(new THREE.BoxGeometry(0.07, 0.32, 0.36), matCinta));
+    g.add(new THREE.Mesh(new THREE.BoxGeometry(0.36, 0.32, 0.07), matCinta));
+    const lazoA = new THREE.Mesh(lazoGeo, matCinta); lazoA.position.set(-0.06, 0.18, 0); lazoA.rotation.y = Math.PI / 2.2; g.add(lazoA);
+    const lazoB = new THREE.Mesh(lazoGeo, matCinta); lazoB.position.set(0.06, 0.18, 0); lazoB.rotation.y = -Math.PI / 2.2; g.add(lazoB);
+    return g;
+  }
+  for (let i = 0; i < 8; i++) {
+    const m = crearRegalo(coloresRegalo[i % coloresRegalo.length]);
+    const ang = Math.random() * Math.PI * 2, r = 5 + Math.random() * 6;
+    m.position.set(Math.cos(ang) * r, -5 + Math.random() * 10, Math.sin(ang) * r);
+    m.rotation.y = Math.random() * Math.PI * 2;
+    m.scale.setScalar(0.8 + Math.random() * 0.6);
+    m.userData = { vel: 0.0022 + Math.random() * 0.003, giro: (Math.random() - .5) * 0.02, fase: Math.random() * 6 };
+    m.visible = false;
+    scene.add(m); flotantes.push(m);
+  }
+
   const chispas = [];
   function lanzarEstrellas(desde, n = 12) {
     for (let i = 0; i < n; i++) {
@@ -346,6 +400,15 @@ const TARJETA = {
     }
   }
   prepararAR();
+
+  // ---------- QR para quien abre la tarjeta desde una computadora ----------
+  function esEscritorio() {
+    const ua = navigator.userAgent;
+    const uaMovil = /android|iphone|ipad|ipod|iemobile|blackberry|opera mini/i.test(ua);
+    const iPadOS = navigator.maxTouchPoints > 1 && /Macintosh/i.test(ua); // iPadOS se reporta como Mac
+    return !uaMovil && !iPadOS;
+  }
+  if (esEscritorio()) $("qr-panel").classList.add("visible");
 
   // ---------- Abrir ----------
   let abierta = false, tAbierta = 0;
