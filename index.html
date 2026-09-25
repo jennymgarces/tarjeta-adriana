@@ -98,7 +98,7 @@
     transform: translateY(130%) rotate(2deg); transition: transform .9s cubic-bezier(.2,.9,.3,1.12);
   }
   #tarjeta.visible { transform: translateY(0) rotate(-1deg); }
-  #tarjeta.minimizada { transform: translateY(calc(100% - 64px)) rotate(0deg); }
+  #tarjeta.minimizada { transform: translateY(calc(100% - 96px)) rotate(0deg); }
   .marco { border: 1.5px solid #E7D5BD; border-radius: 3px; padding: 20px 20px 14px; position: relative; }
   .estampilla {
     position: absolute; top: -4px; right: 12px; width: 54px; height: 64px;
@@ -109,9 +109,12 @@
     transform: rotate(6deg);
   }
   .estampilla span { font-size: .6rem; font-family: var(--sans); font-weight: 600; display: block; text-align: center; margin-top: -6px; }
-  .cabecera { display: flex; align-items: center; gap: 12px; padding-right: 64px; }
+  .cabecera { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding-right: 64px; }
   #foto { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 3px solid var(--oro); display: none; flex-shrink: 0; }
   .para-texto { font: 650 1.45rem/1.15 var(--serif); }
+  .reabrir-pista { display: none; flex-basis: 100%; font: 600 .78rem var(--sans); color: var(--miel-osc); }
+  #tarjeta.minimizada .reabrir-pista { display: block; }
+  #tarjeta.minimizada #cabecera-tarjeta { cursor: pointer; }
   #texto { font: 400 1.04rem/1.62 var(--serif); margin-top: 12px; min-height: 3.2em; max-height: 30vh; overflow-y: auto; }
   #firma { font: 600 1.75rem/1 var(--mano); color: var(--miel-osc); margin-top: 8px; text-align: right; opacity: 0; transition: opacity .6s ease; }
   #firma.visible { opacity: 1; }
@@ -163,9 +166,10 @@ const TARJETA = {
 <article id="tarjeta" aria-live="polite">
   <div class="marco">
     <div class="estampilla" aria-hidden="true"><div>★<span>2026</span></div></div>
-    <div class="cabecera">
+    <div class="cabecera" id="cabecera-tarjeta">
       <img id="foto" alt="">
       <p class="para-texto" id="para-texto"></p>
+      <span class="reabrir-pista" aria-hidden="true">▲ Toca para ver tu mensaje</span>
     </div>
     <p id="texto"></p>
     <p id="firma"></p>
@@ -412,6 +416,14 @@ const TARJETA = {
     e.target.textContent = t.classList.contains("minimizada") ? "Ver mensaje" : "Ocultar";
   });
   $("tarjeta").addEventListener("pointerup", e => e.stopPropagation());
+  // Al minimizar, el botón "Ver mensaje" queda fuera de la pantalla; tocar el encabezado que sigue visible la vuelve a abrir.
+  $("cabecera-tarjeta").addEventListener("pointerup", () => {
+    const t = $("tarjeta");
+    if (t.classList.contains("minimizada")) {
+      t.classList.remove("minimizada");
+      $("boton-min").textContent = "Ocultar";
+    }
+  });
 
   // ---------- Realidad aumentada nativa ----------
   // iPhone/iPad: Quick Look con osito.usdz. Android: Scene Viewer con osito.glb.
